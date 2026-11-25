@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ahona.studentmanagerprosettings28a.ui.viewmodel.SettingsViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 
 @Composable
 fun SettingsScreen(
@@ -33,6 +35,8 @@ fun SettingsScreen(
     }
 
     var sortMenuExpanded by remember { mutableStateOf(false) }
+
+    var showResetDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -128,13 +132,54 @@ fun SettingsScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         // Reset
+//        Button(
+//            onClick = {
+//                viewModel.resetSettings()
+//            },
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Text("Reset Settings")
+//        }
         Button(
             onClick = {
-                viewModel.resetSettings()
+                showResetDialog = true
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Reset Settings")
+        }
+
+        if (showResetDialog) {
+            AlertDialog(
+                onDismissRequest = {
+                    showResetDialog = false
+                },
+                title = {
+                    Text("Reset Settings?")
+                },
+                text = {
+                    Text("This will reset all your preferences to default values.")
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            viewModel.resetSettings()
+                            showResetDialog = false
+                        }
+                    ) {
+                        Text("Reset")
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            showResetDialog = false
+                        }
+                    ) {
+                        Text("Cancel")
+                    }
+                }
+            )
         }
     }
 }
