@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.ahona.studentmanagerprosettings28a.data";
+option java_multiple_files = true;
+
+message UserSettings {
+    bool dark_mode = 1;
+    bool notifications_enabled = 2;
+    string username = 3;
+    string sort_order = 4;
+}
